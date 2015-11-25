@@ -1,0 +1,12 @@
+{
+	"db":{
+		"require":"*db/connect.php",
+
+		"db":false,
+		"user":"some",
+		"host":"host",
+		"database":"some",
+		"password":"pass",
+		"port":"3306"
+	}
+}
