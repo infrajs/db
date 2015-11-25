@@ -11,7 +11,7 @@ function &infra_db($debug = false)
 		}
 		$ans = false;
 
-		if (!$conf['infra']['db']) {
+		if (!$conf['db']['db']) {
 			return $ans;
 		}
 
