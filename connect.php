@@ -1,10 +1,10 @@
 <?php
-
+use infrajs\once\Once;
 function &infra_db($debug = false)
 {
 	header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
 
-	return infra_once('infra_db', function &($debug) {
+	return Once::exec('infra_db', function &($debug) {
 		$conf = infra_config();
 		if (!$debug) {
 			$debug = infra_debug();
@@ -56,7 +56,7 @@ function &infra_db($debug = false)
 }
 function infra_stmt($sql)
 {
-	return infra_once('infra_stmt', function ($sql) {
+	return Once::exec('infra_stmt', function ($sql) {
 		$db = infra_db();
 
 		return $db->prepare($sql);
