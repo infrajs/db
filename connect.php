@@ -5,7 +5,7 @@ function &infra_db($debug = false)
 	header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
 
 	return Once::exec('infra_db', function &($debug) {
-		$conf = infra_config();
+		$conf = Infra::config();
 		if (!$debug) {
 			$debug = infra_debug();
 		}
@@ -46,7 +46,7 @@ function &infra_db($debug = false)
 			//if($debug)throw $e;
 			$db = false;
 			/*if(!$debug){
-				print "Error!: " . infra_toutf($e->getMessage()) . "<br/>";
+				print "Error!: " . Path::toutf($e->getMessage()) . "<br/>";
 				die();
 			}*/
 		}
