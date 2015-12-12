@@ -1,6 +1,6 @@
 {
 	"db":{
-		"require":"*db/connect.php",
+		"require":"*db/infra.php",
 
 		"db":false,
 		"user":"some",

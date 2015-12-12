@@ -4,5 +4,10 @@
 	"required":{
 		"infrajs/once":"~1",
 		"infrajs/path":"~1"
-	}
+	},
+	"autoload":{
+        "psr-4":{
+            "infrajs\\db\\":"/"
+        }
+    }
 }
