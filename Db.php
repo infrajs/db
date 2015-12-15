@@ -25,7 +25,7 @@ class Db {
 			$ans = false;
 
 			if (!$conf['db']) {
-				//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.infra_json_encode($conf['/mysql']));
+				//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.Load::json_encode($conf['/mysql']));
 				return $ans;
 			}
 

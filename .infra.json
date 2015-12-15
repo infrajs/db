@@ -1,7 +1,7 @@
 {
 	"db":{
-		"require":"*db/infra.php",
-
+		"require":"-db/infra.php",
+		"tester":"-db/tests/",
 		"db":false,
 		"user":"some",
 		"host":"host",
