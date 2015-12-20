@@ -1,12 +1,10 @@
 {
-	"db":{
-		"require":"-db/infra.php",
-		"tester":"-db/tests/",
-		"db":false,
-		"user":"some",
-		"host":"host",
-		"database":"some",
-		"password":"pass",
-		"port":"3306"
-	}
+	"tester":"tests/",
+	"conf":"infrajs\\db\\Db",
+	"db":false,
+	"user":"some",
+	"host":"host",
+	"database":"some",
+	"password":"pass",
+	"port":"3306"
 }
