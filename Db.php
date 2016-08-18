@@ -3,7 +3,14 @@ namespace infrajs\db;
 
 use infrajs\once\Once;
 use infrajs\access\Access;
+use infrajs\router\Router;
+use PDO;
 
+if (!is_file('vendor/autoload.php')) {
+	chdir('../../../');
+	require_once('vendor/autoload.php');
+	Router::init(); //Нужен чтобы работал конфиг .infra.json
+}
 class Db {
 	public static $conf=array(
 		"db"=>false,
@@ -13,22 +20,20 @@ class Db {
 		"password"=>"pass",
 		"port"=>"3306"
 	);
-	public static function &pdo($debug = false)
+	public static function &pdo($debug = null)
 	{
 		header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
 
 		return Once::exec('Db::pdo', function &($debug) {
 			$conf = Db::$conf;
-			if (!$debug) {
-				$debug = Access::debug();
-			}
+			if (is_null($debug)) $debug = Access::debug();
+
 			$ans = false;
 
 			if (!$conf['db']) {
 				//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.Load::json_encode($conf['/mysql']));
 				return $ans;
 			}
-
 			if (!$conf['user']) {
 				//if($debug)die('Не указан пользователь для соединения с базой данных');
 				return $ans;
@@ -36,14 +41,16 @@ class Db {
 			if (!class_exists('PDO')) {
 				return $ans;
 			}
+
 			try {
-				@$db = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'].';port='.$conf['port'], $conf['user'], $conf['password']);
+				$db = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'].';port='.$conf['port'], $conf['user'], $conf['password']);
 				$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 				if ($debug) {
 					$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				} else {
 					$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
 				}
+
 					/*array(
 					PDO::ATTR_PERSISTENT => true,
 					PDO::ATTR_ERRMODE => true,
@@ -52,6 +59,7 @@ class Db {
 				$db->exec('SET CHARACTER SET utf8');
 			} catch (PDOException $e) {
 				//if($debug)throw $e;
+
 				$db = false;
 				/*if(!$debug){
 					print "Error!: " . Path::toutf($e->getMessage()) . "<br/>";
