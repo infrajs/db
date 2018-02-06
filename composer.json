@@ -1,6 +1,5 @@
 {
 	"name": "infrajs/db",
-	"license": "GPL3",
 	"required":{
 		"infrajs/once":"~1",
 		"infrajs/path":"~1"
