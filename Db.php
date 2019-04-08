@@ -6,11 +6,6 @@ use infrajs\access\Access;
 use infrajs\router\Router;
 use PDO;
 
-if (!is_file('vendor/autoload.php')) {
-	chdir('../../../');
-	require_once('vendor/autoload.php');
-	Router::init(); //Нужен чтобы работал конфиг .infra.json
-}
 class Db {
 	public static $conf=array(
 		"db"=>false,
@@ -22,9 +17,8 @@ class Db {
 	);
 	public static function &pdo($debug = null)
 	{
-		header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
-
 		return Once::exec('Db::pdo', function &($debug) {
+			header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
 			$conf = Db::$conf;
 			if (is_null($debug)) $debug = Access::debug();
 
