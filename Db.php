@@ -15,6 +15,54 @@ class Db {
 		"password"=>"pass",
 		"port"=>"3306"
 	);
+	public static function &cpdo($debug = null)
+	{
+		return Once::exec('Db::pdo', function &($debug) {
+			$conf = Db::$conf;
+			if (is_null($debug)) $debug = Access::debug();
+
+			$ans = false;
+
+			if (!$conf['db']) {
+				//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.Load::json_encode($conf['/mysql']));
+				return $ans;
+			}
+			if (!$conf['user']) {
+				//if($debug)die('Не указан пользователь для соединения с базой данных');
+				return $ans;
+			}
+			if (!class_exists('PDO')) {
+				return $ans;
+			}
+
+			try {
+				$db = new PDO('mysql:host='.$conf['host'].';dbname='.$conf['database'].';port='.$conf['port'], $conf['user'], $conf['password']);
+				$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+				if ($debug) {
+					$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				} else {
+					$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+				}
+
+					/*array(
+					PDO::ATTR_PERSISTENT => true,
+					PDO::ATTR_ERRMODE => true,
+					PDO::ATTR_ERRMODE=>PDO::ERRMODE_WARNING 
+				)*/
+				$db->exec('SET CHARACTER SET utf8');
+			} catch (PDOException $e) {
+				//if($debug)throw $e;
+
+				$db = false;
+				/*if(!$debug){
+					print "Error!: " . Path::toutf($e->getMessage()) . "<br/>";
+					die();
+				}*/
+			}
+
+			return $db;
+		}, array($debug));
+	}
 	public static function &pdo($debug = null)
 	{
 		return Once::exec('Db::pdo', function &($debug) {
@@ -68,6 +116,14 @@ class Db {
 	{
 		return Once::exec('Db::stmt', function ($sql) {
 			$db = Db::pdo();
+
+			return $db->prepare($sql);
+		}, array($sql));
+	}
+	public static function cstmt($sql)
+	{
+		return Once::exec('Db::stmt', function ($sql) {
+			$db = Db::cpdo();
 
 			return $db->prepare($sql);
 		}, array($sql));
