@@ -1,7 +1,6 @@
 {
 	"name": "infrajs/db",
 	"required":{
-		"infrajs/once":"~1",
 		"infrajs/path":"~1"
 	},
 	"autoload":{
