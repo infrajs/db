@@ -142,6 +142,17 @@ class Db
 		$stmt->execute($args);
 		return $stmt->fetch();
 	}
+	public static function colAll($sql, $args = [])
+	{
+		$stmt = Db::cstmt($sql);
+		$stmt->execute($args);
+		$ar = $stmt->fetchAll();
+		return array_reduce($ar, function ($ak, $item) {
+			$el = array_shift($item);
+			$ak[] = $el;
+			return $ak;
+		}, []);
+	}
 	public static function col($sql, $args = [])
 	{
 		$stmt = Db::cstmt($sql);
