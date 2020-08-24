@@ -174,6 +174,17 @@ class Db
 		while ($row = $stmt->fetch()) $list[$row[$name]] = $row;
 		return $list;
 	}
+	public static function allto($sql, $name, $args = [])
+	{ //Колонки в аргументах $func
+		$stmt = Db::cstmt($sql);
+		$stmt->execute($args);
+		$list = array();
+		while ($row = $stmt->fetch()) {
+			$list[$row[$name]] = $row;
+			unset($list[$row[$name]][$name]);
+		}
+		return $list;
+	}
 	public static function all($sql, $args = [])
 	{ //Колонки в аргументах $func
 		$stmt = Db::cstmt($sql);
