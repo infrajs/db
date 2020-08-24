@@ -30,14 +30,17 @@ class Db
 
 		if (!$conf['db']) {
 			//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.Load::json_encode($conf['/mysql']));
-			return Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 		if (!$conf['user']) {
 			//if($debug)die('Не указан пользователь для соединения с базой данных');
-			return Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 		if (!class_exists('PDO')) {
-			return Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 
 		try {
@@ -80,14 +83,17 @@ class Db
 
 		if (!$conf['db']) {
 			//if($debug)die('Нет конфига для соединения с базой данных. Нужно добавить запись mysql: '.Load::json_encode($conf['/mysql']));
-			return  Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 		if (!$conf['user']) {
 			//if($debug)die('Не указан пользователь для соединения с базой данных');
-			return  Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 		if (!class_exists('PDO')) {
-			return  Db::$once[$key] = $ans;
+			$r = Db::$once[$key] = $ans;
+			return $r;
 		}
 
 		try {
