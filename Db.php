@@ -70,6 +70,14 @@ class Db
 		Db::$once[$key] = &$db;
 		return $db;
 	}
+	public static function start() {
+		$db = &Db::cpdo();
+		$db->beginTransaction();
+	}
+	public static function commit() {
+		$db = &Db::cpdo();
+		$db->commit();
+	}
 	public static function &pdo($debug = null)
 	{
 		header('Cache-Control: no-store'); //no-store ключевое слово используемое в infra_cache
@@ -201,6 +209,8 @@ class Db
 	{
 		$stmt = Db::cstmt($sql);
 		$stmt->execute($args);
-		return $stmt->rowCount();
+		$r = $stmt->rowCount();
+		$stmt->closeCursor();
+		return $r;
 	}
 }
