@@ -195,7 +195,7 @@ class Db
 		$list = array();
 		while ($row = $stmt->fetch()) {
 			$list[$row[$name]] = $row;
-			unset($list[$row[$name]][$name]);
+			//unset($list[$row[$name]][$name]);
 		}
 		return $list;
 	}
