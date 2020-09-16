@@ -24,7 +24,7 @@ class Db
 
 
 		$conf = Db::$conf;
-		if (is_null($debug)) $debug = Access::debug();
+		if (is_null($debug)) $debug = Access::isDebug();
 
 		$ans = false;
 
