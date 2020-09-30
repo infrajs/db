@@ -70,6 +70,10 @@ class Db
 		Db::$once[$key] = &$db;
 		return $db;
 	}
+	public static function isstart() {
+		$db = &Db::cpdo();
+		return $db->inTransaction();
+	}
 	public static function start() {
 		$db = &Db::cpdo();
 		$db->beginTransaction();
