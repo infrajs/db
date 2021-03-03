@@ -203,11 +203,12 @@ class Db
 		}
 		return $list;
 	}
-	public static function all($sql, $args = [])
+	public static function all($sql, $args = [], $isindex = false)
 	{ //Колонки в аргументах $func
 		$stmt = Db::cstmt($sql);
 		$stmt->execute($args);
-		return $stmt->fetchAll();
+		if ($isindex == false) return $stmt->fetchAll();
+		else return $stmt->fetchAll(PDO::FETCH_NUM);
 	}
 	public static function exec($sql, $args = [])
 	{
