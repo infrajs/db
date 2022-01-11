@@ -216,6 +216,6 @@ class Db
 		$stmt->execute($args);
 		$r = $stmt->rowCount();
 		$stmt->closeCursor();
-		return $r;
+		return $r !== false;
 	}
 }
